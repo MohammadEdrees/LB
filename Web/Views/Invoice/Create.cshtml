@@ -1,0 +1,117 @@
+﻿@model Application.ViewModels.CreateInvoiceVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Create Inv";
+
+}
+<form id="mform" class="form-group" method="post" asp-action="Create">
+    <div class="form-control">
+        <label asp-for="InvoiceNum">InvoiceNum</label>
+        <input type="number" placeholder="Invoice Number" asp-for="InvoiceNum" />
+    </div>
+    <div class="form-control">
+        <label asp-for="Date">InvoiceDate</label>
+        <input type="date" placeholder="Invoice Date" asp-for="Date" />
+    </div>
+    <div class="form-control">
+        <label asp-for="InvoiceNum">Customer</label>
+        <input placeholder="Customer Name" asp-for="Customer" />
+    </div>
+    <div class="form-control">
+        <label asp-for="PaymentMethod">PaymentMethod</label>
+        <input placeholder="PaymentMethod" asp-for="PaymentMethod" />
+    </div>
+    <div class="form-control">
+        <label asp-for="Description">Description</label>
+        <textarea placeholder="Description" asp-for="Description">
+
+        </textarea>
+
+    </div>
+    <div class="form-control">
+        <input class="btn btn-outline-secondary" onclick="addItemField()" type="button" value="Add Item" />
+    </div>
+    <div id="items">
+    </div>
+    <div class="form-control">
+        <input asp-for="items[0].ItemCode" placeholder="ItemCode" value="123" />
+        <input asp-for="items[0].ItemName" placeholder="ItemName" value="test" />
+        <input asp-for="items[0].Qty" placeholder="Qty" value="20" />
+        <input asp-for="items[0].Price" placeholder="Price" value="10" />
+        <input asp-for="items[0].Total" placeholder="Total" value="200" />
+        <input class="btn btn-outline-primary" type="submit" value="Create" />
+
+    </div>
+
+</form>
+
+@section scripts{
+    <script>
+        var i = 4;
+        function addItemField() {
+            i= i+1;
+            $("#items").html(`
+                                    <div>
+                                                        <input    id="items[${i}].ItemCode" name="items[${i}].ItemCode"  />
+                                                        <input    id="items[${i}].ItemName" name="items[${i}].ItemName"  />
+                                                        <input    id="items[${i}].Qty"      name="items[${i}].Qty"       />
+                                                        <input    id="items[${i}].Price"    name="items[${i}].Price"     />
+                                                        <input    id="items[${i}].Total"    name="items[${i}].Total"  />
+                                    </div>
+                                          `);
+
+        }
+        function getData() {
+
+            invoiceNum = $("#InvoiceNum").val();
+            date = $("#Date").val();
+            customer = $("#Customer").val();
+            paymentMethod = $("#PaymentMethod").val();
+            description = $("#Description").val();
+            let model = new FormData();
+
+            var items = new Array();
+            for (let i = 0; i < $("#items").children().length; i++) {
+                console.log($("#items").children(i));
+                let code, name, qty, price, total;
+                code = $("#items .item #code").val();
+                name = $("#items .item #name").val();
+                qty = $("#items .item #qty").val();
+                price = $("#items .item #price").val();
+                total = $("#items .item #total").val();
+                items.push({ ItemCode: code, ItemName: name, Qty: qty, Price: price, Total: total });
+                model.append("items", { ItemCode: code, ItemName: name, Qty: qty, Price: price, Total: total });
+            }
+            model.append("InvoiceNum", invoiceNum);
+            model.append("Date", date);
+            model.append("Customer", customer);
+            model.append("PaymentMethod", paymentMethod);
+            model.append("PaymentMethod", paymentMethod);
+            model.append("Description", description);
+            // model.append("items", Json.stringfy(items));
+
+
+            sendAjax(model);
+
+        }
+        function sendAjax(model) {
+
+
+            $.ajax({
+                url: "/Invoice/Create",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                enctype: "application/json",
+                data: model,
+                success: function (result) {
+                    location.replace("/Invoice/Index");
+                },
+                failure: function (info) {
+                    console.log(info);
+                }
+            });
+        }
+
+    </script>
+}
