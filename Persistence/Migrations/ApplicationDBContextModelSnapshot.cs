@@ -45,50 +45,6 @@ namespace Persistence.Migrations
 
                     b.ToTable("Invoices");
                 });
-
-            modelBuilder.Entity("Domain.Entities.Items.Item", b =>
-                {
-                    b.Property<int>("ItemCode")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ItemName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Qty")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Total")
-                        .HasColumnType("float");
-
-                    b.HasKey("ItemCode");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Items.Item", b =>
-                {
-                    b.HasOne("Domain.Entities.Invoices.Invoice", "Invoice")
-                        .WithMany("Items")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Invoice");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Invoices.Invoice", b =>
-                {
-                    b.Navigation("Items");
-                });
 #pragma warning restore 612, 618
         }
     }

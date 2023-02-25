@@ -2,7 +2,6 @@
 using Application.Implementation.Invoice.Queries;
 using Application.ViewModels;
 using Domain.Entities.Invoices;
-using Domain.Entities.Items;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,7 +37,6 @@ namespace Web.Controllers
                 Date= createInvoice.Date,
                 Description= createInvoice.Description,
                 PaymentMethod= createInvoice.PaymentMethod,
-                //Items= createInvoice.items
 
             });
             return RedirectToAction(nameof(Index));

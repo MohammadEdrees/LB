@@ -1,12 +1,6 @@
 ﻿using Application.Interfaces;
-using Domain.Entities.Invoices;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Implementation.Invoice.Queries
 {
@@ -23,7 +17,7 @@ namespace Application.Implementation.Invoice.Queries
 
             public async Task<IEnumerable<Domain.Entities.Invoices.Invoice>> Handle(GetAllInvoices request, CancellationToken cancellationToken)
             {
-                return await _context.Invoices.OrderByDescending(x=>x.Date).Include(x=>x.Items).ToListAsync();
+                return await _context.Invoices.OrderByDescending(x=>x.Date).ToListAsync();
              }
         }
     }

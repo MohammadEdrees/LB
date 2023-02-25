@@ -1,11 +1,4 @@
-﻿using Domain.Entities.Items;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.ViewModels
+﻿namespace Application.ViewModels
 {
     public class CreateInvoiceVM
     {
@@ -14,7 +7,5 @@ namespace Application.ViewModels
         public string Description { get; set; }
         public string Customer { get; set; }
         public DateTime Date { get; set; }
-        //public List<Item> items { get; set; }
-        public List<ItemVM> items { get; set; }
     }
 }

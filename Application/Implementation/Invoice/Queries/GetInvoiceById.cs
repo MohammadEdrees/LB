@@ -1,11 +1,6 @@
 ﻿using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Implementation.Invoice.Queries
 {
@@ -19,8 +14,7 @@ namespace Application.Implementation.Invoice.Queries
 
             public async Task<Domain.Entities.Invoices.Invoice> Handle(GetInvoiceById query, CancellationToken cancellationToken)
             {
-                return null;
-               // return await _context.Invoices.FirstOrDefaultAsync(i => i.Id == query.Id);
+                 return await _context.Invoices.FirstOrDefaultAsync(i => i.InvoiceNum == query.Id);
                     
              }
         }

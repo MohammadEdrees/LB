@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces;
-using Domain.Entities.Items;
 using MediatR;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -13,8 +12,7 @@ namespace Application.Implementation.Invoice.Commands
         public string Description { get; set; }
         public string Customer { get; set; }
         public DateTime Date { get; set; }
-        public virtual ICollection<Item> Items { set; get; }
-
+ 
 
         public class CreateInvoiceHandler : IRequestHandler<CreateInvoice, int>
         {
@@ -34,7 +32,6 @@ namespace Application.Implementation.Invoice.Commands
                     Customer= invoice.Customer,
                     Description=invoice.Description,
                     PaymentMethod=invoice.PaymentMethod,    
-                    Items=invoice.Items
 
                 });
                 await _context.SaveChangesAsync();

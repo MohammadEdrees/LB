@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces;
-using Domain.Entities.Items;
 using MediatR;
 
 namespace Application.Implementation.Invoice.Commands
@@ -11,7 +10,6 @@ namespace Application.Implementation.Invoice.Commands
         public string Description { get; set; }
         public string Customer { get; set; }
         public DateTime Date { get; set; }
-        public virtual ICollection<Item> Items { set; get; }
 
         public class UpdateInvoideHandler : IRequestHandler<UpdateInvoice, int>
         {
@@ -26,7 +24,6 @@ namespace Application.Implementation.Invoice.Commands
                     InvoiceFound.PaymentMethod = invoice.PaymentMethod;
                     InvoiceFound.Description = invoice.Description;
                     InvoiceFound.Customer = invoice.Customer;
-                    InvoiceFound.Items = invoice.Items;
                     
                     return await _context.SaveChangesAsync();   
                 }
